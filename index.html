@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#faf8f3;--cream2:#f4f0e8;--wine:#5c1f1f;--wine-light:#8b3a3a;
+  --wine-mid:#7a2d2d;--ink:#1a1410;--muted:#8a7f74;--border:#e0d9ce;--rule:#c8bfb2;
+}
+body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden}
+.site{display:flex;flex-direction:column;min-height:100vh}
+nav{padding:2rem 3rem 0;display:flex;flex-direction:column;align-items:center}
+.name-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2.8rem,6vw,4.5rem);font-weight:300;font-style:italic;color:var(--wine);letter-spacing:-0.01em;line-height:1;margin-bottom:1.8rem;opacity:0;animation:slideDown 0.7s ease 0.1s forwards}
+.nav-links{display:flex;gap:2.4rem;border-top:1.5px solid var(--wine);border-bottom:1px solid var(--border);width:100%;justify-content:center;padding:0.9rem 0;flex-wrap:wrap;opacity:0;animation:slideDown 0.7s ease 0.3s forwards}
+.nav-link{font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color 0.2s;text-decoration:none;font-weight:400;border:none;background:none}
+.nav-link:hover,.nav-link.active{color:var(--wine)}
+.nav-link.active{font-weight:500}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.page{display:none;padding:3rem 3rem 2rem;max-width:900px;margin:0 auto;width:100%}
+.page.active{display:block}
+.page.active .reveal{animation:fadeUp 0.55s ease both}
+.page.active .reveal-1{animation-delay:0.05s}
+.page.active .reveal-2{animation-delay:0.15s}
+.page.active .reveal-3{animation-delay:0.25s}
+.page.active .reveal-4{animation-delay:0.35s}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:260px 1fr;gap:3.5rem;align-items:start;margin-top:1rem}
+.about-photo-spacer{height:2.2rem}
+.about-photo{width:100%;height:340px;object-fit:cover;object-position:top center;display:block;border:1px solid var(--border)}
+.section-label{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--wine-light);margin-bottom:1.4rem;font-weight:500}
+.about-heading{font-family:"Cormorant Garamond",serif;font-size:2.4rem;font-weight:400;color:var(--wine);line-height:1.1;margin-bottom:1.4rem;font-style:italic}
+.hero-word{display:inline-block;opacity:0;transform:translateY(100%);animation:wordReveal 0.6s cubic-bezier(0.22,1,0.36,1) forwards}
+@keyframes wordReveal{to{opacity:1;transform:translateY(0)}}
+.about-body p{font-size:0.9rem;line-height:1.8;color:#3a3330;margin-bottom:1rem;font-weight:300}
+.contact-strip{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.contact-item{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem}
+.contact-icon{width:22px;height:22px;background:var(--wine);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.contact-icon svg{width:11px;height:11px;fill:white}
+.contact-text{font-size:0.78rem;color:var(--wine-mid)}
+.contact-text a{color:var(--wine-mid);text-decoration:none}
+.contact-text a:hover{text-decoration:underline}
+
+/* PAGE HEADER */
+.page-header{margin-bottom:2.5rem}
+.page-heading{font-family:"Cormorant Garamond",serif;font-size:2.2rem;font-weight:400;color:var(--wine);font-style:italic;margin-bottom:0.4rem}
+.page-sub{font-size:0.8rem;color:var(--muted);letter-spacing:0.06em}
+
+/* PORTFOLIO */
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.4rem}
+.portfolio-card{background:var(--cream2);border:1px solid var(--border);cursor:pointer;transition:border-color 0.2s,transform 0.2s;overflow:hidden}
+.portfolio-card:hover{border-color:var(--wine-light);transform:translateY(-3px)}
+.card-thumb{aspect-ratio:4/3;overflow:hidden}
+.card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s}
+.card-thumb-placeholder{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,#e8e0d4,#d4c9bc);display:flex;align-items:center;justify-content:center;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.portfolio-card:hover .card-thumb img{transform:scale(1.05)}
+.card-body{padding:0.9rem 1rem}
+.card-tag{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--wine-light);margin-bottom:0.3rem;font-weight:500}
+.card-title{font-family:"Cormorant Garamond",serif;font-size:1.1rem;font-weight:400;color:var(--ink);margin-bottom:0.2rem}
+.card-desc{font-size:0.75rem;color:var(--muted);line-height:1.5}
+
+/* COLUMN */
+.column-empty{padding:3rem 0;text-align:center;font-family:"Cormorant Garamond",serif;font-size:1.1rem;font-style:italic;color:var(--rule)}
+
+/* NABAKES */
+.nabakes-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.poster-wrap{border-radius:18px;overflow:hidden;box-shadow:5px 5px 0 rgba(0,0,0,0.18);position:relative}
+.poster-bg{position:relative}
+.poster-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(0.35)}
+.poster-content{position:relative;z-index:1}
+.poster-header{padding:1.6rem 1.6rem 1rem;text-align:center}
+.poster-logo{font-family:"Fredoka One",cursive;font-size:2.6rem;color:#fff;-webkit-text-stroke:2px #FFE135;text-shadow:2px 2px 0 rgba(0,0,0,0.4);display:block;margin-bottom:0.2rem}
+.poster-tagline{font-size:0.65rem;color:#FFE135;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;font-family:"Nunito",sans-serif}
+.poster-divider{height:1px;background:rgba(255,255,255,0.2);margin:0 1.4rem}
+.poster-body{padding:1.2rem 1.4rem 0}
+.poster-flavours-label{font-family:"Fredoka One",cursive;font-size:0.85rem;color:#FFE135;letter-spacing:0.06em;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.4rem}
+.poster-flavours-label::before,.poster-flavours-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.3);border-radius:2px}
+.poster-flavour-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:1.2rem}
+.poster-flavour{background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.25);border-radius:8px;padding:0.45rem 0.65rem;font-size:0.75rem;font-weight:700;color:white;font-family:"Nunito",sans-serif;display:flex;align-items:center;gap:0.35rem}
+.poster-dot{width:6px;height:6px;border-radius:50%;background:#FFE135;flex-shrink:0}
+.poster-pricing{background:#1B4FD8;border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.2rem;box-shadow:2px 2px 0 #1540b0}
+.poster-pricing-label{font-size:0.72rem;color:#FFE135;letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-bottom:0.6rem;font-family:"Nunito",sans-serif;font-weight:800}
+.poster-pricing-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.1);border-radius:6px;padding:0.35rem 0.65rem;margin-bottom:0.35rem}
+.poster-pricing-row:last-child{margin-bottom:0}
+.poster-qty{font-size:0.76rem;color:rgba(255,255,255,0.8);font-weight:600;font-family:"Nunito",sans-serif}
+.poster-price{font-family:"Fredoka One",cursive;font-size:0.95rem;color:#FFE135}
+.poster-badge{font-size:0.55rem;background:#FFE135;color:#1540b0;border-radius:20px;padding:0.1rem 0.4rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;font-family:"Nunito",sans-serif}
+.poster-cta{background:#C8271A;padding:0.9rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
+.poster-cta-text{font-size:0.7rem;color:rgba(255,255,255,0.75);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;font-family:"Nunito",sans-serif}
+.poster-handle{font-family:"Fredoka One",cursive;font-size:0.95rem;color:#FFE135}
+.poster-footer{background:#a01e13;padding:0.5rem;text-align:center;font-size:0.6rem;color:rgba(255,255,255,0.4);letter-spacing:0.08em;text-transform:uppercase;font-family:"Nunito",sans-serif;font-weight:600}
+.project-notes{padding-top:0.5rem}
+.note-block{margin-bottom:1.4rem}
+.note-block h4{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.4rem}
+.note-block p{font-size:0.85rem;color:#3a3330;line-height:1.75;font-weight:300}
+.back-btn{background:none;border:none;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;padding:0;margin-bottom:2rem;display:flex;align-items:center;gap:0.4rem;transition:color 0.2s}
+.back-btn:hover{color:var(--wine)}
+.back-btn::before{content:"←";font-size:0.9rem}
+
+/* PHOTOGRAPHY */
+.albums-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:0.5rem}
+.album-card{cursor:pointer;overflow:hidden;border:1px solid var(--border);position:relative}
+.album-card:hover .album-cover{transform:scale(1.05)}
+.album-cover{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform 0.5s ease}
+.album-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(26,20,16,0.75));padding:1rem 0.9rem 0.8rem}
+.album-name{font-family:"Cormorant Garamond",serif;font-size:1.2rem;font-weight:400;color:white;font-style:italic}
+.album-count{font-size:0.65rem;color:rgba(255,255,255,0.65);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px}
+.album-view{display:none}
+.album-view.active{display:block;animation:fadeUp 0.4s ease}
+.album-photos{columns:2;gap:1rem}
+.album-photo-item{break-inside:avoid;margin-bottom:1rem;overflow:hidden;border:1px solid var(--border)}
+.album-photo-item img{width:100%;display:block;transition:transform 0.4s}
+.album-photo-item:hover img{transform:scale(1.02)}
+.photo-meta{padding:0.5rem 0.75rem;background:var(--cream2)}
+.photo-location{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.photo-note{font-family:"Cormorant Garamond",serif;font-size:0.9rem;font-style:italic;color:var(--wine-mid)}
+
+/* CONTACT FOOTER */
+.contact-footer{margin-top:auto;border-top:1.5px solid var(--wine);background:var(--cream2)}
+.contact-inner{max-width:900px;margin:0 auto;padding:2.5rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.footer-heading{font-family:"Cormorant Garamond",serif;font-size:1.8rem;font-weight:300;color:var(--wine);font-style:italic;margin-bottom:0.5rem}
+.footer-sub{font-size:0.82rem;color:var(--muted);line-height:1.7;font-weight:300}
+.email-form{display:flex;flex-direction:column;gap:0.7rem}
+.email-form input,.email-form textarea{background:var(--cream);border:1px solid var(--border);padding:0.65rem 0.9rem;font-family:"DM Sans",sans-serif;font-size:0.82rem;color:var(--ink);outline:none;transition:border-color 0.2s;resize:none;width:100%}
+.email-form input:focus,.email-form textarea:focus{border-color:var(--wine-light)}
+.email-form textarea{min-height:80px}
+.send-btn{background:var(--wine);color:white;border:none;padding:0.7rem 1.4rem;font-family:"DM Sans",sans-serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:background 0.2s,transform 0.15s;align-self:flex-start}
+.send-btn:hover{background:var(--wine-mid);transform:translateY(-1px)}
+.send-success{font-size:0.78rem;color:var(--wine-mid);font-style:italic;margin-top:0.4rem;display:none}
+</style>
+</head>
+<body>
+<div class="site">
+<nav>
+  <div class="name-title">Hazel Toh.</div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('about',this)">About</button>
+    <button class="nav-link" onclick="showPage('portfolio',this)">Work</button>
+    <button class="nav-link" onclick="showPage('column',this)">Column</button>
+    <button class="nav-link" onclick="showPage('photography',this)">Photography</button>
+  </div>
+</nav>
+
+<!-- ABOUT -->
+<div class="page active" id="page-about">
+  <div class="about-grid">
+    <div class="reveal reveal-2">
+      <div class="about-photo-spacer"></div>
+      <img class="about-photo" src="imgs/img01.jpg" alt="Hazel">
+    </div>
+    <div>
+      <div class="section-label reveal reveal-1">About Me</div>
+      <h1 class="about-heading reveal reveal-2">
+        <span class="hero-word" style="animation-delay:0.1s">Nice</span>
+        <span class="hero-word" style="animation-delay:0.17s"> to</span>
+        <span class="hero-word" style="animation-delay:0.24s"> meet</span>
+        <span class="hero-word" style="animation-delay:0.31s"> you,</span>
+        <span class="hero-word" style="animation-delay:0.38s"> I'm</span>
+        <span class="hero-word" style="animation-delay:0.45s"> Hazel.</span>
+      </h1>
+      <div class="about-body reveal reveal-3">
+        <p>A second-year Business student at NUS, specialising in Innovation and Marketing.</p>
+        <p>I'm drawn to problem-solving, creativity, and understanding how things work beneath the surface. I see learning in every part of life, and I strive to bring fresh perspectives while respecting the systems behind them.</p>
+        <p>In a fast-moving, technology-driven landscape, I seek to create value through intentionality — creating work that is both thoughtful and original.</p>
+      </div>
+      <div class="contact-strip reveal reveal-4">
+        <div class="contact-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+          <span class="contact-text"><a href="https://sg.linkedin.com/in/hazeltoh03" target="_blank">sg.linkedin.com/in/hazeltoh03</a></span>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+          <span class="contact-text"><a href="mailto:hazelzixuan@gmail.com">hazelzixuan@gmail.com</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="page" id="page-portfolio">
+  <div class="page-header reveal reveal-1">
+    <div class="section-label">Selected Work</div>
+    <h2 class="page-heading">Work, edits & designs.</h2>
+    <p class="page-sub">A collection of projects across branding and education design.</p>
+  </div>
+  <div class="portfolio-grid reveal reveal-2">
+    <div class="portfolio-card" onclick="showPage('nabakes',null)">
+      <div class="card-thumb"><img src="imgs/img02.jpg" alt="NaBakes"></div>
+      <div class="card-body">
+        <div class="card-tag">Brand Design</div>
+        <div class="card-title">NaBakes Menu</div>
+        <div class="card-desc">Menu design and brand identity for a homemade brownie business.</div>
+      </div>
+    </div>
+    <div class="portfolio-card" onclick="showPage('teaching',null)">
+      <div class="card-thumb"><img src="imgs/img03.jpg" alt="WA1 Cheatsheet" style="width:100%;height:100%;object-fit:cover"></div>
+      <div class="card-body">
+        <div class="card-tag">Education Design</div>
+        <div class="card-title">AI-Assisted Teaching Resource</div>
+        <div class="card-desc">Personalised P5 maths cheatsheet built with AI, tailored to one student's specific gaps.</div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+<!-- NABAKES -->
+<div class="page" id="page-nabakes">
+  <button class="back-btn reveal reveal-1" onclick="showPage('portfolio',null)">Back to Work</button>
+  <div class="nabakes-layout">
+    <div class="poster-wrap reveal reveal-2" style="max-width:340px;font-family:'Comic Sans MS','Comic Sans',cursive;position:relative">
+
+      <style>
+        .nb-rain{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;border-radius:20px;z-index:0}
+        .nb-br{position:absolute;animation:nb-fall linear infinite;opacity:0.18;font-size:14px}
+        @keyframes nb-fall{0%{transform:translateY(-30px) rotate(0deg)}100%{transform:translateY(700px) rotate(360deg)}}
+        .nb-card{background:#f5f0e8;border-radius:20px;padding:1.4rem 1.6rem;position:relative;z-index:1;overflow:hidden;box-shadow:0 4px 0 rgba(0,0,0,0.15)}
+        .nb-card::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(0,0,0,0.03) 28px,rgba(0,0,0,0.03) 29px);pointer-events:none}
+        .nb-wrap-inner{background:#c8271a;border-radius:20px;padding:1rem;position:relative}
+      </style>
+
+      <div class="nb-wrap-inner">
+        <div class="nb-rain" id="nb-rain-el"></div>
+        <div class="nb-card">
+
+          <div style="text-align:center;margin-bottom:1rem">
+            <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:4px">
+              <svg width="30" height="30" viewBox="0 0 30 30"><rect x="3" y="9" width="16" height="13" rx="3" fill="#f0c080" stroke="#8b5e1a" stroke-width="1.6"/><circle cx="8" cy="15" r="2" fill="#5c1f1f"/><circle cx="14" cy="13" r="1.5" fill="#5c1f1f"/><rect x="19" y="11" width="8" height="11" rx="2" fill="#3a1000" stroke="#1a0800" stroke-width="1.4"/><circle cx="22" cy="15" r="1.2" fill="#f0c080"/><circle cx="24" cy="18" r="1.2" fill="#f0c080"/><path d="M16 15 Q18 13 20 15" stroke="#8b5e1a" stroke-width="1.2" fill="none"/></svg>
+              <div style="font-size:2.1rem;color:#c8271a;font-weight:700;line-height:1;text-transform:uppercase">NaBakes</div>
+              <svg width="30" height="30" viewBox="0 0 30 30"><path d="M5 22 Q6 10 15 8 Q24 10 25 22 Z" fill="none" stroke="#c8271a" stroke-width="1.7"/><path d="M9 22 Q9 15 15 13 Q21 15 21 22" fill="none" stroke="#c8271a" stroke-width="1.2"/><ellipse cx="15" cy="22" rx="8" ry="2" fill="none" stroke="#c8271a" stroke-width="1.4"/></svg>
+            </div>
+            <div style="font-size:0.62rem;color:#999;letter-spacing:0.16em;text-transform:uppercase">homemade brownies · sg ✦</div>
+          </div>
+
+          <div style="height:1px;background:#c8271a;opacity:0.2;margin:0.75rem 0"></div>
+          <div style="font-size:1.05rem;color:#c8271a;font-weight:700;text-transform:uppercase;margin-bottom:0.8rem">✦ Flavours ✦</div>
+
+          <!-- BROOKIE -->
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1rem">
+            <svg width="40" height="36" viewBox="0 0 40 36">
+              <rect x="1" y="4" width="17" height="13" rx="3" fill="#f0c080" stroke="#8b5e1a" stroke-width="1.5"/>
+              <circle cx="6" cy="9" r="2" fill="#5c1f1f"/>
+              <circle cx="13" cy="7" r="1.5" fill="#5c1f1f"/>
+              <rect x="21" y="6" width="17" height="13" rx="3" fill="#3a1000" stroke="#1a0800" stroke-width="1.5"/>
+              <circle cx="26" cy="10" r="1.5" fill="#f0c080"/>
+              <circle cx="32" cy="8" r="1.5" fill="#f0c080"/>
+              <circle cx="29" cy="14" r="1.5" fill="#f0c080"/>
+              <path d="M17 10 Q20 7 22 10" stroke="#8b5e1a" stroke-width="1.3" fill="none"/>
+            </svg>
+            <div style="flex:1">
+              <div style="font-size:0.9rem;color:#1a1410;font-weight:700;text-transform:uppercase;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                Brookie
+                <span style="display:inline-flex;align-items:center;gap:4px;background:#FFE135;border-radius:20px;padding:2px 8px;font-size:0.58rem;font-weight:700;color:#c8271a;text-transform:uppercase;letter-spacing:0.04em">
+                  <svg width="10" height="10" viewBox="0 0 12 12"><ellipse cx="6" cy="8" rx="5" ry="3" fill="#fff" stroke="#c8271a" stroke-width="1"/><path d="M2 8 Q2 3 6 2 Q10 3 10 8" fill="#fff" stroke="#c8271a" stroke-width="1"/><rect x="1" y="7" width="10" height="2" rx="1" fill="#c8271a"/></svg>
+                  chef's fav ✦
+                </span>
+              </div>
+              <div style="font-size:0.71rem;color:#666;line-height:1.45;margin-top:3px">want a cookie AND a brownie? don't worry, we make you sound less greedy ✦</div>
+            </div>
+          </div>
+
+          <!-- OREO NUTELLA -->
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1rem">
+            <svg width="40" height="36" viewBox="0 0 40 36">
+              <rect x="4" y="4" width="22" height="16" rx="3" fill="#3a1000" stroke="#1a0800" stroke-width="1.5"/>
+              <circle cx="9" cy="8" r="3" fill="#1a0800"/><circle cx="9" cy="8" r="1.2" fill="#fff"/>
+              <circle cx="17" cy="11" r="3" fill="#1a0800"/><circle cx="17" cy="11" r="1.2" fill="#fff"/>
+              <circle cx="13" cy="16" r="3" fill="#1a0800"/><circle cx="13" cy="16" r="1.2" fill="#fff"/>
+              <path d="M4 13 Q15 22 26 13" stroke="#c67a00" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+            <div style="flex:1">
+              <div style="font-size:0.9rem;color:#1a1410;font-weight:700;text-transform:uppercase">Oreo Nutella ✦</div>
+              <div style="font-size:0.71rem;color:#666;line-height:1.45;margin-top:3px">brownie with oreo crumbles and a nutella swirl ✦</div>
+            </div>
+          </div>
+
+          <!-- BISCOFF -->
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1rem">
+            <svg width="40" height="36" viewBox="0 0 40 38">
+              <rect x="8" y="16" width="22" height="18" rx="5" fill="#d4892a" stroke="#8b5e1a" stroke-width="1.5"/>
+              <rect x="8" y="16" width="22" height="7" rx="5" fill="#b8721a" stroke="#8b5e1a" stroke-width="1.5"/>
+              <rect x="12" y="8" width="14" height="10" rx="3" fill="#e8a040" stroke="#8b5e1a" stroke-width="1.5"/>
+              <text x="19" y="16" text-anchor="middle" font-size="5.5" fill="#5c1f1f" font-family="Comic Sans MS,cursive" font-weight="bold">Biscoff</text>
+              <circle cx="14" cy="28" r="2.5" fill="#8b5e1a" opacity="0.35"/>
+              <circle cx="22" cy="30" r="2.5" fill="#8b5e1a" opacity="0.35"/>
+            </svg>
+            <div style="flex:1">
+              <div style="font-size:0.9rem;color:#1a1410;font-weight:700;text-transform:uppercase">Biscoff ✦</div>
+              <div style="font-size:0.71rem;color:#666;line-height:1.45;margin-top:3px">straight from the jar into your brownie ✦</div>
+            </div>
+          </div>
+
+          <!-- MARSHMALLOW -->
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1rem">
+            <svg width="40" height="44" viewBox="0 0 40 44">
+              <rect x="4" y="22" width="22" height="14" rx="3" fill="#3a1000" stroke="#1a0800" stroke-width="1.5"/>
+              <circle cx="8" cy="26" r="1.5" fill="#f0c080" opacity="0.6"/>
+              <circle cx="14" cy="30" r="1.5" fill="#f0c080" opacity="0.6"/>
+              <circle cx="20" cy="27" r="1.5" fill="#f0c080" opacity="0.6"/>
+              <ellipse cx="15" cy="16" rx="9" ry="6" fill="white" stroke="#ddd" stroke-width="1.3"/>
+              <ellipse cx="15" cy="16" rx="6" ry="4" fill="#fafafa"/>
+              <path d="M10 15 Q15 12 20 15 Q15 18 10 15Z" fill="#ffe8d6" opacity="0.6"/>
+              <line x1="15" y1="22" x2="15" y2="24" stroke="#ddd" stroke-width="1"/>
+              <text x="20" y="42" text-anchor="middle" font-size="7" fill="#c8271a" font-family="Comic Sans MS,cursive">so fluffy!! ✦</text>
+            </svg>
+            <div style="flex:1">
+              <div style="font-size:0.9rem;color:#1a1410;font-weight:700;text-transform:uppercase">Marshmallow ✦</div>
+              <div style="font-size:0.71rem;color:#666;line-height:1.45;margin-top:3px">maybe we should always put a marshmallow on top of everything ✦</div>
+            </div>
+          </div>
+
+          <div style="height:1px;background:#c8271a;opacity:0.2;margin:0.75rem 0"></div>
+          <div style="font-size:1.05rem;color:#1B4FD8;font-weight:700;text-transform:uppercase;margin-bottom:0.7rem">✦ Pick your size ✦</div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:0.42rem 0.8rem;border-radius:10px;margin-bottom:0.4rem;background:#FFE135;color:#c8271a;font-weight:700;font-size:0.82rem">
+            <span>2 pieces ✦</span><span style="font-size:1rem;font-weight:700">$4</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:0.42rem 0.8rem;border-radius:10px;margin-bottom:0.4rem;background:#c8271a;color:#FFE135;font-weight:700;font-size:0.82rem">
+            <span>4 pieces ✦</span><span style="font-size:1rem;font-weight:700">$7</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:0.42rem 0.8rem;border-radius:10px;margin-bottom:0.4rem;background:#1B4FD8;color:#fff;font-weight:700;font-size:0.82rem">
+            <span>16 pieces · full pan <span style="font-size:0.52rem;background:rgba(255,255,255,0.28);padding:2px 6px;border-radius:10px;margin-left:5px;text-transform:uppercase;letter-spacing:0.05em">best value ✦</span></span>
+            <span style="font-size:1rem;font-weight:700">$25</span>
+          </div>
+
+          <div style="text-align:center;margin-top:0.9rem;padding-top:0.75rem;border-top:1.5px dashed #c8271a">
+            <div style="font-size:1.1rem;color:#c8271a;font-weight:700">@nabakes ✦</div>
+            <div style="font-size:0.6rem;color:#aaa;letter-spacing:0.1em;text-transform:uppercase;margin-top:3px">order on telegram · mix and match welcome</div>
+          </div>
+
+        </div>
+      </div>
+
+      <script>
+        (function(){
+          var emojis=['🍫','✦','🍪','⭐','🍫','✦','🍪'];
+          var rain=document.getElementById('nb-rain-el');
+          if(!rain)return;
+          for(var i=0;i<18;i++){
+            var el=document.createElement('span');
+            el.className='nb-br';
+            el.textContent=emojis[i%emojis.length];
+            el.style.left=(Math.random()*100)+'%';
+            el.style.animationDuration=(2.5+Math.random()*3)+'s';
+            el.style.animationDelay=(Math.random()*3)+'s';
+            el.style.fontSize=(11+Math.random()*9)+'px';
+            rain.appendChild(el);
+          }
+        })();
+      </script>
+    </div>
+
+    <div class="project-notes reveal reveal-3">
+      <div class="note-block">
+        <h4>What is this?</h4>
+        <p>Brownie poster for my sister's homemade brownie business. Posted to Telegram and Instagram Stories.</p>
+      </div>
+      <div class="note-block">
+        <h4>Considerations</h4>
+        <p>Kept her brand colours. Focused on making the pricing scannable at a glance — people are scrolling fast on Stories, so hierarchy matters. Rewrote the copy to feel more conversational without losing clarity. Kept it visually punchy so it stops the scroll.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COLUMN -->
+<div class="page" id="page-column">
+  <div class="page-header reveal reveal-1">
+    <div class="section-label">The Column</div>
+    <h2 class="page-heading">Things I've read, felt and thought about.</h2>
+    <p class="page-sub">On books, experiences, observations, and ideas I keep returning to.</p>
+  </div>
+  <div class="column-empty reveal reveal-2">Nothing here yet. Check back soon.</div>
+</div>
+
+<!-- PHOTOGRAPHY -->
+<div class="page" id="page-photography">
+  <div id="albums-index">
+    <div class="page-header reveal reveal-1">
+      <div class="section-label">Photography</div>
+      <h2 class="page-heading">Moments I wanted to keep.</h2>
+      <p class="page-sub">Places, light, and the things I notice when paying attention.</p>
+    </div>
+    <div class="albums-grid reveal reveal-2">
+      <div class="album-card" onclick="openAlbum('hk')">
+        <img class="album-cover" src="imgs/img04.jpg" alt="Hong Kong">
+        <div class="album-overlay"><div class="album-name">Hong Kong</div><div class="album-count">3 photos</div></div>
+      </div>
+      <div class="album-card" onclick="openAlbum('europe')">
+        <img class="album-cover" src="imgs/img05.jpg" alt="Europe">
+        <div class="album-overlay"><div class="album-name">Europe</div><div class="album-count">15 photos</div></div>
+      </div>
+      <div class="album-card" onclick="openAlbum('thailand')">
+        <img class="album-cover" src="imgs/img06.jpg" alt="Thailand">
+        <div class="album-overlay"><div class="album-name">Thailand</div><div class="album-count">2 photos</div></div>
+      </div>
+      <div class="album-card" onclick="openAlbum('japan')">
+        <img class="album-cover" src="imgs/img07.jpg" alt="Japan">
+        <div class="album-overlay"><div class="album-name">Japan</div><div class="album-count">5 photos</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="album-hk" class="album-view">
+    <button class="back-btn" onclick="closeAlbum()">All Albums</button>
+    <div class="page-header"><div class="section-label">Photography</div><h2 class="page-heading">Hong Kong</h2></div>
+    <div class="album-photos">
+      <div class="album-photo-item"><img src="imgs/img08.jpg" alt="HK Taxi"><div class="photo-meta"><div class="photo-location">Hong Kong</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img09.jpg" alt="HK Street"><div class="photo-meta"><div class="photo-location">Hong Kong</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img04.jpg" alt="HK Tram"><div class="photo-meta"><div class="photo-location">Hong Kong</div><div class="photo-note">Add a note</div></div></div>
+    </div>
+  </div>
+
+  <div id="album-europe" class="album-view">
+    <button class="back-btn" onclick="closeAlbum()">All Albums</button>
+    <div class="page-header"><div class="section-label">Photography</div><h2 class="page-heading">Europe</h2></div>
+    <div class="album-photos">
+      <div class="album-photo-item"><img src="imgs/img10.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img11.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img12.jpg" alt="My favourite"><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">My favourite photo ever</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img13.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img05.jpg" alt="Amsterdam"><div class="photo-meta"><div class="photo-location">Amsterdam</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img14.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img15.jpg" alt="Copenhagen"><div class="photo-meta"><div class="photo-location">Copenhagen</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img16.jpg" alt="York"><div class="photo-meta"><div class="photo-location">York, England</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img17.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img18.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img19.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img20.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img21.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img22.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img23.jpg" alt=""><div class="photo-meta"><div class="photo-location">Europe</div><div class="photo-note">Add a note</div></div></div>
+    </div>
+  </div>
+
+  <div id="album-thailand" class="album-view">
+    <button class="back-btn" onclick="closeAlbum()">All Albums</button>
+    <div class="page-header"><div class="section-label">Photography</div><h2 class="page-heading">Thailand</h2></div>
+    <div class="album-photos">
+      <div class="album-photo-item"><img src="imgs/img06.jpg" alt="Thailand"><div class="photo-meta"><div class="photo-location">Thailand</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img24.jpg" alt="Thailand"><div class="photo-meta"><div class="photo-location">Thailand</div><div class="photo-note">Add a note</div></div></div>
+    </div>
+  </div>
+  <div id="album-japan" class="album-view">
+    <button class="back-btn" onclick="closeAlbum()">All Albums</button>
+    <div class="page-header"><div class="section-label">Photography</div><h2 class="page-heading">Japan</h2></div>
+    <div class="album-photos">
+      <div class="album-photo-item"><img src="imgs/img07.jpg" alt="Japan sunset"><div class="photo-meta"><div class="photo-location">Japan</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img25.jpg" alt="Japan interior"><div class="photo-meta"><div class="photo-location">Japan</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img26.jpg" alt="Lawson"><div class="photo-meta"><div class="photo-location">Japan</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img27.jpg" alt="Japan"><div class="photo-meta"><div class="photo-location">Japan</div><div class="photo-note">Add a note</div></div></div>
+      <div class="album-photo-item"><img src="imgs/img28.jpg" alt="Japan"><div class="photo-meta"><div class="photo-location">Japan</div><div class="photo-note">Add a note</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TEACHING PAGE -->
+<div class="page" id="page-teaching">
+  <button class="back-btn reveal reveal-1" onclick="showPage('portfolio',null)">Back to Work</button>
+  <div class="page-header reveal reveal-2">
+    <div class="section-label">Education Design</div>
+    <h2 class="page-heading">AI-Assisted Teaching Resource</h2>
+    <p class="page-sub">P5 Maths · WA1 Cheatsheet · 2025</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start" class="reveal reveal-3">
+    <div>
+      <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.5rem">The student</div>
+      <p style="font-size:0.88rem;line-height:1.8;color:#3a3330;font-weight:300;margin-bottom:1.6rem">She's smart and catches on fast but falls short in English. When exam questions use tricky phrasing, she loses marks that have nothing to do with her actual ability. That felt unfair to me.</p>
+
+      <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.5rem">What I noticed</div>
+      <p style="font-size:0.88rem;line-height:1.8;color:#3a3330;font-weight:300;margin-bottom:1.6rem">She needed to see things to understand them. One gap that kept coming up was knowing when to multiply versus divide. So I grounded it in something concrete: multiplication as repeated groups (3 sets of 2 cookies = 6, so 3 × 2 = 6), and division as splitting equally (6 cookies shared between 3 friends = 2 each, so 6 ÷ 3 = 2). Once she could picture it, it stuck.</p>
+
+      <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.5rem">Before the cheatsheet</div>
+      <p style="font-size:0.88rem;line-height:1.8;color:#3a3330;font-weight:300;margin-bottom:1.6rem">We had been working through workbooks and assessment books together, but we ran out of questions. Rather than buying more books with questions that might not even match what she needed, I used AI to generate new ones tailored to the exact topics and question styles she would see in her exam. I also adjusted the numbers for variety so she was getting fresh practice each time. Saves time, saves money, and it's personalised to her.</p>
+
+      <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.5rem">Why a cheatsheet</div>
+      <p style="font-size:0.88rem;line-height:1.8;color:#3a3330;font-weight:300;margin-bottom:1.6rem">With her WA1 coming up, I wanted her to be able to sit with a paper independently and actually finish it. That's something a lot of kids struggle with, not because they don't know the content, but because they panic when they get stuck. Having a reference to come back to helps. It's something uni students use all the time, and I thought: why not for her too?</p>
+
+      <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.5rem">How I made it</div>
+      <p style="font-size:0.88rem;line-height:1.8;color:#3a3330;font-weight:300;margin-bottom:1.6rem">I sketched out the structure on my iPad first, mapping her weak areas to specific examples. Then I used AI to generate the cheatsheet from that, reviewed every page, and fixed errors (arrows pointing the wrong way, sizing issues).</p>
+
+      <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.5rem">On using AI</div>
+      <p style="font-size:0.88rem;line-height:1.8;color:#3a3330;font-weight:300;margin-bottom:1.6rem">It took about 2 hours in total. Felt long at first, but doing it without AI would've meant figuring out layout, fonts, sizing and spacing from scratch, that alone would've been most of the day. AI handled the production. I just had to make sure the thinking behind it was right.</p>
+
+      <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.8rem;margin-top:0.5rem">Topics covered</div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+        <span style="background:var(--cream2);border:1px solid var(--border);padding:0.3rem 0.7rem;font-size:0.75rem;color:#3a3330">Numbers to a million</span>
+        <span style="background:var(--cream2);border:1px solid var(--border);padding:0.3rem 0.7rem;font-size:0.75rem;color:#3a3330">Four operations</span>
+        <span style="background:var(--cream2);border:1px solid var(--border);padding:0.3rem 0.7rem;font-size:0.75rem;color:#3a3330">Rounding off</span>
+        <span style="background:var(--cream2);border:1px solid var(--border);padding:0.3rem 0.7rem;font-size:0.75rem;color:#3a3330">HCF</span>
+        <span style="background:var(--cream2);border:1px solid var(--border);padding:0.3rem 0.7rem;font-size:0.75rem;color:#3a3330">LCM</span>
+        <span style="background:var(--cream2);border:1px solid var(--border);padding:0.3rem 0.7rem;font-size:0.75rem;color:#3a3330">Fractions</span>
+        <span style="background:var(--cream2);border:1px solid var(--border);padding:0.3rem 0.7rem;font-size:0.75rem;color:#3a3330">Fraction operations</span>
+        <span style="background:var(--cream2);border:1px solid var(--border);padding:0.3rem 0.7rem;font-size:0.75rem;color:#3a3330">Elapsed time</span>
+      </div>
+    </div>
+
+    <div>
+      <p style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--wine-light);font-weight:500;margin-bottom:0.8rem">A few pages from the cheatsheet</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.6rem;margin-bottom:0.6rem">
+        <div style="overflow:hidden;border:1px solid var(--border)">
+          <img src="imgs/img29.jpg" style="width:100%;display:block">
+          <div style="padding:0.3rem 0.5rem;background:var(--cream2);font-size:0.6rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">HCF</div>
+        </div>
+        <div style="overflow:hidden;border:1px solid var(--border)">
+          <img src="imgs/img30.jpg" style="width:100%;display:block">
+          <div style="padding:0.3rem 0.5rem;background:var(--cream2);font-size:0.6rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">LCM</div>
+        </div>
+        <div style="overflow:hidden;border:1px solid var(--border)">
+          <img src="imgs/img31.jpg" style="width:100%;display:block">
+          <div style="padding:0.3rem 0.5rem;background:var(--cream2);font-size:0.6rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Fractions</div>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:var(--muted);font-style:italic;margin-bottom:1.4rem">Showing 3 of 7 pages.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT FOOTER -->
+<div class="contact-footer">
+  <div class="contact-inner">
+    <div>
+      <div class="footer-heading">Say hello.</div>
+      <p class="footer-sub">I'm always happy to hear from people, drop me a message!</p>
+    </div>
+    <div class="email-form">
+      <input type="text" placeholder="Your name" id="f-name">
+      <input type="email" placeholder="Your email" id="f-email">
+      <textarea placeholder="Your message" id="f-msg"></textarea>
+      <button class="send-btn" onclick="handleSend()">Send</button>
+      <div class="send-success" id="send-ok">Sent! I'll get back to you soon ✦</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
+  var page=document.getElementById('page-'+id);
+  page.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(id==='photography')closeAlbum();
+  page.querySelectorAll('.reveal').forEach(function(el){el.style.animation='none';el.offsetHeight;el.style.animation='';});
+  page.querySelectorAll('.hero-word').forEach(function(el){el.style.animation='none';el.offsetHeight;el.style.animation='';});
+  window.scrollTo(0,0);
+}
+function openAlbum(name){
+  document.getElementById('albums-index').style.display='none';
+  document.querySelectorAll('.album-view').forEach(a=>a.classList.remove('active'));
+  document.getElementById('album-'+name).classList.add('active');
+}
+function closeAlbum(){
+  document.getElementById('albums-index').style.display='block';
+  document.querySelectorAll('.album-view').forEach(a=>a.classList.remove('active'));
+}
+function handleSend(){
+  var name=document.getElementById('f-name').value.trim();
+  var email=document.getElementById('f-email').value.trim();
+  var msg=document.getElementById('f-msg').value.trim();
+  if(!name||!email||!msg)return;
+  var ok=document.getElementById('send-ok');
+  ok.style.display='block';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-email').value='';
+  document.getElementById('f-msg').value='';
+  setTimeout(function(){ok.style.display='none';},4000);
+}
+</script>
+</body>
+</html>
